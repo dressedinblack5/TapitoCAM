@@ -21,6 +21,7 @@ save_config() {
 
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
+    export TAPO_USER TAPO_PASS TAPO_IP
 fi
 
 # Prompt for missing credentials
