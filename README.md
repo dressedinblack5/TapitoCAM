@@ -15,8 +15,8 @@ TP-Link Tapo Camera RSTP Client for Linux.
    ```
 
 3. **Update Desktop Entry**:
-   The provided `TapitoCAM.desktop` assumes you installed the files in `~/Downloads/TapitoCAM`. 
-   If you installed it elsewhere, open `TapitoCAM.desktop` and update the `Exec` and `Path` lines to point to your installation directory.
+   The provided `TapitoCAM.desktop` is pre-configured with `/home/dressedinblack/...`. 
+   If your username is different, open `TapitoCAM.desktop` and replace `/home/dressedinblack/` with your actual home directory path (e.g., `/home/yourusername/`).
 
 4. Copy the desktop file to your local applications folder:
    ```bash
