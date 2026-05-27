@@ -19,7 +19,7 @@ fi
 
 # Prompt for missing credentials
 if [[ -z "$TAPO_USER" || -z "$TAPO_PASS" || -z "$TAPO_IP" ]]; then
-    echo "--- TapitoCAM Configuration ---"
+    echo "--- tapitoCAM Configuration ---"
     read -r -p "Enter Tapo Username: " TAPO_USER
     read -r -s -p "Enter Tapo Password: " TAPO_PASS
     echo ""
