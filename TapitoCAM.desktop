@@ -1,0 +1,17 @@
+[Desktop Entry]
+Comment[en_US]=
+Comment=
+Exec=/home/$USER/tapitocam.sh
+GenericName[en_US]=TapitoCAM
+GenericName=TapitoCAM
+Icon=camera-app
+MimeType=
+Name[en_US]=TapitoCAM
+Name=TapitoCAM
+Path=/home/dressedinblack/
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
