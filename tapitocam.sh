@@ -41,7 +41,7 @@ fi
 while true; do
     # Run mpv and capture log to a temp file
     ERROR_LOG=$(mktemp)
-    mpv --log-file="$ERROR_LOG" --profile=low-latency --untimed --cache=no --demuxer-readahead-secs=0 --vd-lavc-threads=1 --rtsp-transport=udp --demuxer-lavf-o-add=fflags=+nobuffer --demuxer-lavf-o-add=probesize=32 --demuxer-lavf-o-add=analyzeduration=0 --video-sync=audio "rtsp://${TAPO_USER}:${TAPO_PASS}@${TAPO_IP}/stream1"
+    mpv --log-file="$ERROR_LOG" --profile=fast --untimed --cache=no --demuxer-readahead-secs=0 --vd-lavc-threads=1 --rtsp-transport=udp --demuxer-lavf-o-add=fflags=+nobuffer --demuxer-lavf-o-add=probesize=32 --demuxer-lavf-o-add=analyzeduration=0 --video-sync=audio "rtsp://${TAPO_USER}:${TAPO_PASS}@${TAPO_IP}/stream1"
     MPV_EXIT_CODE=$?
     
     # Exit if mpv was interrupted (Ctrl+C)
