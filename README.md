@@ -1,4 +1,4 @@
-# TapitoCAM
+# tapitoCAM
 
 TP-Link Tapo Camera RSTP Client for Linux.
 
@@ -17,9 +17,9 @@ To enable RTSP (Real-Time Streaming Protocol) on a TP-Link Tapo camera, you must
 
 ## How to use
 
-1. Clone this repository to your desired location (e.g., `~/Downloads/TapitoCAM`) and `cd` to it :
+1. Clone this repository to your desired location (e.g., `~/Downloads/tapitoCAM`) and `cd` to it :
    ```bash
-   git clone https://github.com/dressedinblack5/TapitoCAM.git ~/Downloads/TapitoCAM && cd ~/Downloads/TapitoCAM
+   git clone https://github.com/dressedinblack5/tapitoCAM.git ~/Downloads/tapitoCAM && cd ~/Downloads/tapitoCAM
 
 2. Make the script executable:
    ```bash
