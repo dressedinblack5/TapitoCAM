@@ -19,12 +19,11 @@ To enable RTSP (Real-Time Streaming Protocol) on a TP-Link Tapo camera, you must
 
 1. Clone this repository to your desired location (e.g., `~/Downloads/TapitoCAM`):
    ```bash
-   git clone https://github.com/dressedinblack5/TapitoCAM.git ~/Downloads/TapitoCAM
-   ```
+   git clone https://github.com/dressedinblack5/TapitoCAM.git ~/Downloads/TapitoCAM && cd ~/Downloads/TapitoCAM
 
 2. Make the script executable:
    ```bash
-   chmod +x ~/Downloads/TapitoCAM/tapitocam.sh
+   chmod +x tapitocam.sh
    ```
 3. Run the script:
    ```bash
