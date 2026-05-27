@@ -15,7 +15,7 @@ To enable RTSP (Real-Time Streaming Protocol) on a TP-Link Tapo camera, you must
    5. Connect: Once created, you can use these credentials to access the stream via your local IP address (e.g.,
       rtsp://username:password@192.168.x.x:554/stream1).
 
-## Usage
+## How to use
 
 1. Clone this repository to your desired location (e.g., `~/Downloads/TapitoCAM`):
    ```bash
