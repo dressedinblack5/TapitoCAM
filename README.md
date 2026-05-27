@@ -35,4 +35,5 @@ When you run the script for the first time, it will interactively prompt you for
 - Tapo Username
 - Tapo Password
 - Camera IP Address
+
 *These will be saved securely in a local hidden file named `.tapitocam.env` in the same directory as the script.*
