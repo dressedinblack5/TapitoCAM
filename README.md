@@ -2,6 +2,9 @@
 
 TP-Link Tapo Camera RSTP Client for Linux.
 
+![CLI Preview](assets/cli-preview.png)
+![Tapo Camera Preview](assets/tc-preview.png)
+
 To enable RTSP (Real-Time Streaming Protocol) on a TP-Link Tapo camera, you must use the Tapo app to create a
   specific account for camera streaming. Here is the standard process:
 
