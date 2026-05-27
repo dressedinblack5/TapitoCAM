@@ -46,7 +46,30 @@ while true; do
         break
     fi
     
-    # Placeholder for error detection (Task 2)
+    # Search for network errors in the log
+    if grep -Ei "No route to host|Connection timed out|Connection refused|Failed to resolve hostname" "$ERROR_LOG" > /dev/null; then
+        echo ""
+        echo "!!! Connection Error Detected !!!"
+        grep -Ei "No route to host|Connection timed out|Connection refused|Failed to resolve hostname" "$ERROR_LOG" | head -n 1
+        echo ""
+        read -p "Would you like to enter a different IP? (y/n): " RETRY_IP
+        
+        if [[ "$RETRY_IP" == "y" || "$RETRY_IP" == "Y" ]]; then
+            read -p "Enter new Camera IP: " TAPO_IP
+            
+            # Update the config file
+            cat <<EOF > "$CONFIG_FILE"
+TAPO_USER="$TAPO_USER"
+TAPO_PASS="$TAPO_PASS"
+TAPO_IP="$TAPO_IP"
+EOF
+            chmod 600 "$CONFIG_FILE"
+            echo "IP updated to $TAPO_IP. Retrying..."
+            rm "$ERROR_LOG"
+            continue
+        fi
+    fi
+
     rm "$ERROR_LOG"
     break
 done
