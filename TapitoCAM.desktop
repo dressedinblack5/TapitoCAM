@@ -1,14 +1,14 @@
 [Desktop Entry]
 Comment[en_US]=
 Comment=
-Exec=/home/dressedinblack/Documentos/TapitoCAM/tapitocam.sh
+Exec=/home/$USER/Downloads/TapitoCAM/tapitocam.sh
 GenericName[en_US]=TapitoCAM
 GenericName=TapitoCAM
 Icon=camera-app
 MimeType=
 Name[en_US]=TapitoCAM
 Name=TapitoCAM
-Path=/home/dressedinblack/Documentos/TapitoCAM/
+Path=/home/$USER/Downloads/TapitoCAM/
 StartupNotify=true
 Terminal=true
 TerminalOptions=
