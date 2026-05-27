@@ -4,12 +4,12 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/.tapitocam.env"
 
+# Cleanup temporary log files on exit
+trap 'rm -f "$ERROR_LOG" 2>/dev/null' EXIT
+
 save_config() {
-    cat <<EOF > "$CONFIG_FILE"
-TAPO_USER="$TAPO_USER"
-TAPO_PASS="$TAPO_PASS"
-TAPO_IP="$TAPO_IP"
-EOF
+    # Use printf %q to safely escape special characters for shell sourcing
+    printf 'TAPO_USER=%q\nTAPO_PASS=%q\nTAPO_IP=%q\n' "$TAPO_USER" "$TAPO_PASS" "$TAPO_IP" > "$CONFIG_FILE"
     chmod 600 "$CONFIG_FILE"
 }
 
@@ -20,12 +20,12 @@ fi
 # Prompt for missing credentials
 if [[ -z "$TAPO_USER" || -z "$TAPO_PASS" || -z "$TAPO_IP" ]]; then
     echo "--- TapitoCAM Configuration ---"
-    read -p "Enter Tapo Username: " TAPO_USER
-    read -p "Enter Tapo Password: " -s TAPO_PASS
+    read -r -p "Enter Tapo Username: " TAPO_USER
+    read -r -s -p "Enter Tapo Password: " TAPO_PASS
     echo ""
-    read -p "Enter Camera IP (e.g., 192.168.1.100): " TAPO_IP
+    read -r -p "Enter Camera IP (e.g., 192.168.1.100): " TAPO_IP
     
-    read -p "Save these settings to .tapitocam.env? (y/n): " SAVE_CONF
+    read -r -p "Save these settings to .tapitocam.env? (y/n): " SAVE_CONF
     if [[ "$SAVE_CONF" == "y" || "$SAVE_CONF" == "Y" ]]; then
         save_config
         echo "Settings saved."
@@ -45,14 +45,12 @@ while true; do
     MPV_EXIT_CODE=$?
     
     # Exit if mpv was interrupted (Ctrl+C)
-    if [ $MPV_EXIT_CODE -eq 130 ]; then
-        rm "$ERROR_LOG"
-        exit 130
+    if [ "$MPV_EXIT_CODE" -eq 130 ]; then
+        break
     fi
 
     # Break if successful
-    if [ $MPV_EXIT_CODE -eq 0 ]; then
-        rm "$ERROR_LOG"
+    if [ "$MPV_EXIT_CODE" -eq 0 ]; then
         break
     fi
     
@@ -62,17 +60,16 @@ while true; do
         echo "!!! Connection Error Detected !!!"
         grep -Ei "No route to host|Connection timed out|Connection refused|Failed to resolve hostname" "$ERROR_LOG" | head -n 1
         echo ""
-        read -p "Would you like to enter a different IP? (y/n): " RETRY_IP
+        read -r -p "Would you like to enter a different IP? (y/n): " RETRY_IP
         
         if [[ "$RETRY_IP" == "y" || "$RETRY_IP" == "Y" ]]; then
-            read -p "Enter new Camera IP: " TAPO_IP
+            read -r -p "Enter new Camera IP: " TAPO_IP
             save_config
             echo "IP updated to $TAPO_IP. Retrying..."
-            rm "$ERROR_LOG"
+            rm "$ERROR_LOG" 2>/dev/null
             continue
         fi
     fi
 
-    rm "$ERROR_LOG"
     break
 done
