@@ -4,6 +4,15 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/.tapitocam.env"
 
+save_config() {
+    cat <<EOF > "$CONFIG_FILE"
+TAPO_USER="$TAPO_USER"
+TAPO_PASS="$TAPO_PASS"
+TAPO_IP="$TAPO_IP"
+EOF
+    chmod 600 "$CONFIG_FILE"
+}
+
 if [ -f "$CONFIG_FILE" ]; then
     source "$CONFIG_FILE"
 fi
@@ -18,12 +27,7 @@ if [[ -z "$TAPO_USER" || -z "$TAPO_PASS" || -z "$TAPO_IP" ]]; then
     
     read -p "Save these settings to .tapitocam.env? (y/n): " SAVE_CONF
     if [[ "$SAVE_CONF" == "y" || "$SAVE_CONF" == "Y" ]]; then
-        cat <<EOF > "$CONFIG_FILE"
-TAPO_USER="$TAPO_USER"
-TAPO_PASS="$TAPO_PASS"
-TAPO_IP="$TAPO_IP"
-EOF
-        chmod 600 "$CONFIG_FILE"
+        save_config
         echo "Settings saved."
     fi
 fi
@@ -35,12 +39,18 @@ if [[ -z "$TAPO_USER" || -z "$TAPO_PASS" || -z "$TAPO_IP" ]]; then
 fi
 
 while true; do
-    # Run mpv and capture stderr to a temp file
+    # Run mpv and capture log to a temp file
     ERROR_LOG=$(mktemp)
-    mpv --profile=low-latency --untimed --cache=no --demuxer-readahead-secs=0 --vd-lavc-threads=1 --rtsp-transport=udp --demuxer-lavf-o-add=fflags=+nobuffer --demuxer-lavf-o-add=probesize=32 --demuxer-lavf-o-add=analyzeduration=0 --video-sync=audio "rtsp://${TAPO_USER}:${TAPO_PASS}@${TAPO_IP}/stream1" 2> "$ERROR_LOG"
+    mpv --log-file="$ERROR_LOG" --profile=low-latency --untimed --cache=no --demuxer-readahead-secs=0 --vd-lavc-threads=1 --rtsp-transport=udp --demuxer-lavf-o-add=fflags=+nobuffer --demuxer-lavf-o-add=probesize=32 --demuxer-lavf-o-add=analyzeduration=0 --video-sync=audio "rtsp://${TAPO_USER}:${TAPO_PASS}@${TAPO_IP}/stream1"
     MPV_EXIT_CODE=$?
+    
+    # Exit if mpv was interrupted (Ctrl+C)
+    if [ $MPV_EXIT_CODE -eq 130 ]; then
+        rm "$ERROR_LOG"
+        exit 130
+    fi
 
-    # For now, just break if exit code is 0
+    # Break if successful
     if [ $MPV_EXIT_CODE -eq 0 ]; then
         rm "$ERROR_LOG"
         break
@@ -56,14 +66,7 @@ while true; do
         
         if [[ "$RETRY_IP" == "y" || "$RETRY_IP" == "Y" ]]; then
             read -p "Enter new Camera IP: " TAPO_IP
-            
-            # Update the config file
-            cat <<EOF > "$CONFIG_FILE"
-TAPO_USER="$TAPO_USER"
-TAPO_PASS="$TAPO_PASS"
-TAPO_IP="$TAPO_IP"
-EOF
-            chmod 600 "$CONFIG_FILE"
+            save_config
             echo "IP updated to $TAPO_IP. Retrying..."
             rm "$ERROR_LOG"
             continue
