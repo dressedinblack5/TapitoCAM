@@ -2,12 +2,12 @@
 Comment[en_US]=
 Comment=
 Exec=tapitocam.sh
-GenericName[en_US]=TapitoCAM
-GenericName=TapitoCAM
+GenericName[en_US]=
+GenericName=tapitoCAM
 Icon=camera-app
 MimeType=
-Name[en_US]=TapitoCAM
-Name=TapitoCAM
+Name[en_US]=tapitoCAM
+Name=tapitoCAM
 Path=
 StartupNotify=true
 Terminal=true
