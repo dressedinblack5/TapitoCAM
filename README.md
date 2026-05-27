@@ -2,6 +2,7 @@
 
 TP-Link Tapo Camera RSTP Client for Linux.
 
+
 ## Installation
 
 1. Clone this repository to your desired location (e.g., `~/Downloads/TapitoCAM`):
@@ -14,18 +15,27 @@ TP-Link Tapo Camera RSTP Client for Linux.
    chmod +x ~/Downloads/TapitoCAM/tapitocam.sh
    ```
 
-3. **Update Wrapper Script**:
-   The provided `launch_tapitocam.sh` assumes you installed the files in `~/Downloads/TapitoCAM`. 
-   If you installed it elsewhere, open `launch_tapitocam.sh` and update the directory path. The desktop entry uses `$HOME`, which is automatically handled.
-
-4. Copy the desktop file to your local applications folder:
+3. Copy the desktop file to your local applications folder:
    ```bash
    cp ~/Downloads/TapitoCAM/TapitoCAM.desktop ~/.local/share/applications/
    ```
 
 ## Usage
 
-When you run the application for the first time, it will interactively prompt you for:
+To enable RTSP (Real-Time Streaming Protocol) on a TP-Link Tapo camera, you must use the Tapo app to create a
+  specific account for camera streaming. Here is the standard process:
+
+   1. Open the Tapo App: Select your camera from the home screen.
+   2. Go to Camera Settings: Tap the gear icon in the top right corner.
+   3. Advanced Settings: Tap "Advanced Settings" (this is usually near the bottom).
+   4. Camera Account: 
+       * Tap "Camera Account".
+       * If you haven't set it up, you will be prompted to create a username and password.
+       * Note: This is separate from your main TP-Link account credentials.
+   5. Connect: Once created, you can use these credentials to access the stream via your local IP address (e.g.,
+      rtsp://username:password@192.168.x.x:554/stream1).
+
+When you run the script for the first time, it will interactively prompt you for:
 - Tapo Username
 - Tapo Password
 - Camera IP Address
