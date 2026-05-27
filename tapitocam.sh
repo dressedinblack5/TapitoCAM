@@ -1,6 +1,12 @@
 #!/bin/bash
 # tapitocam.sh - TP-Link Tapo Camera RSTP Client
 
+# Check for dependencies
+if ! command -v mpv &> /dev/null; then
+    echo "Error: mpv is not installed. Please install it (e.g., sudo apt install mpv)."
+    exit 1
+fi
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_FILE="${SCRIPT_DIR}/.tapitocam.env"
 
@@ -25,6 +31,11 @@ if [[ -z "$TAPO_USER" || -z "$TAPO_PASS" || -z "$TAPO_IP" ]]; then
     echo ""
     read -r -p "Enter Camera IP (e.g., 192.168.1.100): " TAPO_IP
     
+    # Simple IP validation
+    if [[ ! "$TAPO_IP" =~ ^([0-9]{1,3}\.){3}[0-9]{1,3}$ ]]; then
+        echo "Warning: The entered IP address format may be invalid."
+    fi
+
     read -r -p "Save these settings to .tapitocam.env? (y/n): " SAVE_CONF
     if [[ "$SAVE_CONF" == "y" || "$SAVE_CONF" == "Y" ]]; then
         save_config
